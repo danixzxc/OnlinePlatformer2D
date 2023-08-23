@@ -4,18 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using TMPro;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
-    [SerializeField] public InputField usernameInput;
-    public Text buttonText;
+    [SerializeField] private TMP_InputField _usernameInput;
+    [SerializeField] private TextMeshProUGUI _buttonText;
 
     public void OnClickConnect()
     {
-        if(usernameInput.text.Length >= 1)
+        if(_usernameInput.text.Length >= 1)
         { 
-            PhotonNetwork.NickName = usernameInput.text;
-            buttonText.text = "Connecting...";
+            PhotonNetwork.NickName = _usernameInput.text;
+            _buttonText.text = "Connecting...";
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -24,4 +25,5 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene("Lobby");
     }
+    
 }
