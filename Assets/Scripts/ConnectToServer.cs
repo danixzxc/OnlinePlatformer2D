@@ -17,6 +17,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         { 
             PhotonNetwork.NickName = _usernameInput.text;
             _buttonText.text = "Connecting...";
+            PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
         }
     }
