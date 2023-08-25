@@ -4,6 +4,9 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using System.Collections.Specialized;
+using Photon.Realtime;
+using TMPro;
+
 public class PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float _speed;
@@ -16,19 +19,27 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
     private PhotonView _view;
+    private CanvasController _canvasController;
 
     private void Awake()
     {
         _view = GetComponent<PhotonView>();
         GameObject _object = GameObject.Find("Fixed Joystick");
         _joystick = _object.GetComponent<FixedJoystick>();
+
+        GameObject canvas = GameObject.Find("Canvas");
+        _canvasController = canvas.GetComponent<CanvasController>();
     }
 
     private void Start()
     {
         _playerProperties["playerCoins"] = 0;
         _playerProperties["isAlive"] = true;
-        _player.gameObject.tag = "Player";
+
+        if (_view.IsMine)
+        {
+            _player.gameObject.tag = "Player";
+        }
     }
 
     private void FixedUpdate()
@@ -52,6 +63,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void TakeDamage(float damage)
     {
         _health -= damage;
+        _canvasController.ChangeHealth(_health, 30);
         PhotonNetwork.Instantiate(_bloodParticles.name, transform.position, transform.rotation);
         if (_health <= 0)
         {
@@ -59,20 +71,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-    private void Death()
+    public void Death()
     {
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
+
         PhotonNetwork.CurrentRoom.CustomProperties["deadPlayersAmount"] = (int)PhotonNetwork.CurrentRoom.CustomProperties["deadPlayersAmount"] + 1;
         _playerProperties["isAlive"] = false;
 
         Debug.Log("you died");
 
         if ((int)PhotonNetwork.CurrentRoom.CustomProperties["deadPlayersAmount"] == (int)PhotonNetwork.CurrentRoom.CustomProperties["playersAmount"] - 1)
-            //GameEndScreen();
-            Debug.Log("game end");
+            _canvasController.EndGame();
     }
     public void IncreaseCoins(int coins)
     {
         _playerProperties["playerCoins"] = (int)_playerProperties["playerCoins"] + coins;
+        PhotonNetwork.CurrentRoom.CustomProperties["playerCoins"] = _playerProperties["playerCoins"];
     }
+
 }

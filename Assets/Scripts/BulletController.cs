@@ -12,14 +12,14 @@ public class BulletController : MonoBehaviour
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _rigidBody.velocity = transform.right * _speed;
+        _rigidBody.velocity = transform.up * _speed;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         PlayerController playerController = other.GetComponent<PlayerController>();
 
-        if (playerController != null && other.gameObject.tag == "Player")
+        if (playerController != null && other.gameObject.tag != "Player")
         {
             playerController.TakeDamage(10);
             PhotonNetwork.Destroy(gameObject);

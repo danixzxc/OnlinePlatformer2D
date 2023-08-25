@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -8460347740550338490}
   m_Layer: 0
   m_Name: Chatacter_4
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,8 +102,8 @@ MonoBehaviour:
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
+    SynchronizeEnabled: 1
+    InterpolateOption: 0
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
   m_ScaleModel:
@@ -152,7 +152,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootingPoint: {fileID: 5214225578940883219}
-  _centerRotation: {fileID: 0}
+  _centerRotation: {fileID: 5037457728417189790}
   _bulletPrefab: {fileID: 8134365896669606134, guid: 7891daec4d14add49b0223a8c4b20dd9, type: 3}
   _bulletParticles: {fileID: 128897322812213776, guid: ff420460be3f49247a8602c0eaf2251a, type: 3}
 --- !u!1 &8605150729184879902

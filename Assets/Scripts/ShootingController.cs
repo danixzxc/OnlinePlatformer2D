@@ -26,8 +26,8 @@ public class ShootingController : MonoBehaviourPunCallbacks
     {
         if (_view.IsMine)
         {
-            PhotonNetwork.Instantiate(_bulletPrefab.name, _shootingPoint.position, _centerRotation.rotation);
-            PhotonNetwork.Instantiate(_bulletParticles.name, transform.position, _centerRotation.rotation);
+            PhotonNetwork.Instantiate(_bulletPrefab.name, _shootingPoint.position, this.transform.rotation);
+            PhotonNetwork.Instantiate(_bulletParticles.name, transform.position, this.transform.rotation);
         }
     }
 }
