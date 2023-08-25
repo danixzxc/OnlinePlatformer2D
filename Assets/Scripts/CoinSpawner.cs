@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class CoinSpawner : MonoBehaviour
+public class CoinSpawner : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject _coinPrefab;
     [SerializeField] private Transform[] _spawnPoints;

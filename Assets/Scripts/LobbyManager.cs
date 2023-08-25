@@ -129,6 +129,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             _playerItemsList.Add(newPlayerItem);
         }
+        PhotonNetwork.CurrentRoom.CustomProperties["playersAmount"] = _playerItemsList.Count;
     }
 
     private void Update()
@@ -141,6 +142,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickPlayButton()
     {
+        PhotonNetwork.CurrentRoom.CustomProperties["deadPlayersAmount"] = 0;
         PhotonNetwork.LoadLevel("Game");
     }
 }

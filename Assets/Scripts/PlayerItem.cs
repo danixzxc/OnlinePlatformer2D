@@ -28,6 +28,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         _backgroundImage = GetComponent<Image>();
     }
 
+
     public void SetPlayerInfo(Player player)
     {
        _playerName.text = player.NickName;

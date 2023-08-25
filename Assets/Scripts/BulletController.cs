@@ -19,10 +19,10 @@ public class BulletController : MonoBehaviour
     {
         PlayerController playerController = other.GetComponent<PlayerController>();
 
-        if (playerController != null)
+        if (playerController != null && other.gameObject.tag == "Player")
         {
             playerController.TakeDamage(10);
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }
