@@ -17,7 +17,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject _leftArrowButton;
     [SerializeField] private GameObject _rightArrowButton;
 
-    private ExitGames.Client.Photon.Hashtable _playerProperties = new ExitGames.Client.Photon.Hashtable();
+    public ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
     [SerializeField] private Image _playerAvatar;
     [SerializeField] private Sprite[] _avatars;
 
@@ -32,7 +32,9 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     {
        _playerName.text = player.NickName;
         _player = player;
-        UpdatePlayerItem(_player);
+       // UpdatePlayerItem(_player);
+        playerProperties["playerAvatar"] = 0;
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
     public void ApplyLocalChanges()
@@ -44,22 +46,22 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
     public void OnClickLeftArrow()
     {
-        if ((int)_playerProperties["playerAvatar"] == 0)
-            _playerProperties["playerAvatar"] = _avatars.Length - 1;
+        if ((int)playerProperties["playerAvatar"] == 0)
+            playerProperties["playerAvatar"] = _avatars.Length - 1;
         else
-            _playerProperties["playerAvatar"] = (int)_playerProperties["playerAvatar"] - 1;
+            playerProperties["playerAvatar"] = (int)playerProperties["playerAvatar"] - 1;
 
-        PhotonNetwork.SetPlayerCustomProperties(_playerProperties);
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
     public void OnClickRightArrow()
     {
-        if ((int)_playerProperties["playerAvatar"] == _avatars.Length - 1)
-            _playerProperties["playerAvatar"] = 0;
+        if ((int)playerProperties["playerAvatar"] == _avatars.Length - 1)
+            playerProperties["playerAvatar"] = 0;
         else
-            _playerProperties["playerAvatar"] = (int)_playerProperties["playerAvatar"] + 1;
+            playerProperties["playerAvatar"] = (int)playerProperties["playerAvatar"] + 1;
 
-        PhotonNetwork.SetPlayerCustomProperties(_playerProperties);
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable hashTable)
@@ -73,12 +75,13 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         if (player.CustomProperties.ContainsKey("playerAvatar"))
         {
             _playerAvatar.sprite = _avatars[(int)player.CustomProperties["playerAvatar"]];
-            _playerProperties["playerAvatar"] = (int)player.CustomProperties["playerAvatar"];
+            playerProperties["playerAvatar"] = (int)player.CustomProperties["playerAvatar"];
         }
         else 
         {
-            _playerProperties["playerAvatar"] = 0;
+            playerProperties["playerAvatar"] = 0;
         }
+
     }
 
 
